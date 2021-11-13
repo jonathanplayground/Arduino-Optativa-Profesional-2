@@ -1,0 +1,47 @@
+/*
+ * Punto 4 de taller 2
+ * Filtro de promedio movil segun la formula --> filtro movil exponencial
+ */
+
+const int alpha = 0.5;
+float s = 0.0;
+float y = s;
+int pinSensor = A0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Filtrada, Sensor");     //Nombre para las señales mostradas en Serial Ploter
+  
+}
+
+void loop() {
+  /* prueba realizada con error en variable alpah inicializada 
+  y = (float)analogRead(A0);
+  s = y*0.05;
+  s1 = 1-0.05;
+  s2 =s+s1;
+  Serial.print("Señal entrada ");
+  Serial.println(y);
+  delay(500);
+  Serial.print("s ");
+  Serial.println(s);
+  delay(500);
+  Serial.print("s1 ");
+  Serial.println(s1);
+  delay(500);
+  Serial.print("s2 ");
+  Serial.println(s2);
+  delay(500);
+  */
+  y = analogRead(pinSensor);
+  s = (0.05*y)+(1-0.05)*s;
+  //Serial.print("Señal entrada ");
+  
+  //Serial.print("Señal filtrada ");
+  Serial.println(s);
+  Serial.print(",");
+  Serial.println(y);
+  delay(500);
+  
+}
