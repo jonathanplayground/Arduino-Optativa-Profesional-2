@@ -40,6 +40,14 @@ String reloj()
   int segundos = n%60;            //esta linea obtiene el modulo de los milisegundos que siguen contando, al dividir sobre 60, el valor mantiene elreloj al margen
   int minutos = n/60;
 
+  if(segundos == 0)             //evita el error al pasar los 60 segundos.
+    {
+      lcd.clear();
+      //delay(1);
+      lcd.print("Curso IoT UPN");
+      //delay(1);
+    }
+   
   String S = String(minutos) + ":" +String(segundos);       //valores asignados a la variable S (caracteres) 
   return(S);                                                // retorno de la funcion
 }
