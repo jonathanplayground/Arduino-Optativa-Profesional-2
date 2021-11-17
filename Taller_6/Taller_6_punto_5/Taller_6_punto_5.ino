@@ -1,6 +1,6 @@
 /*
  * Lectura de sensor de temperatura (lm35) y despliegue en pantalla Lcd 
- * Visualización de grados centigrados y farenheit
+ * Visualización de grados centigrados y fahrenheit
  */
 
 
@@ -31,7 +31,7 @@
 
 void loop() {
   float centigrados = leerGrados();
-  float faren = farenheit();
+  float faren = fahrenheit();
   lcd.setCursor(0,1);
   lcd.print(centigrados);
   lcd.setCursor(9,1);
@@ -55,7 +55,7 @@ float leerGrados()
    }
   return c;
 }
-float farenheit()
+float fahrenheit()
 {
   f = (c*9/5)+32;
   return f;
