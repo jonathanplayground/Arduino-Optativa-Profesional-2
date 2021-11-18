@@ -1,0 +1,81 @@
+/*
+ * Manejo de Joystick
+ * Se visualizá en el monitor serial los valores del control joystick.
+ * Se modifel programa para visualizar por pantalla lcd
+ * 
+ * Joystick conexiones
+ * LAS CONEXIONES QUEDAN INTERCAMBIADAS, PARA OBTENER LOS VALORES DEL JOYSTICK SOBRE LA BASE DE PROTOBOARD
+ * VRX -> A1
+ * VRY -> A0
+ * SW  -> D2
+ * 
+ * lcd Conexiones 
+ * VSS -> GND
+ * VDD -> 5V
+ * RS -> D7
+ * RW -> GND
+ * E  -> D8
+ * DB4 -> D9 
+ * DB5 -> D10
+ * DB6 -> D11
+ * DB7 -> D12
+ * A  -> 5V
+ * K  -> GND
+ */
+
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(7,8,9,10,11,12);
+ 
+int JoyStick_X = A0;                                           //x
+int JoyStick_Y = A1;                                           //y
+int JoyStick_SW = 2;                                          //switch
+int pinLed = 3;                                              //Indicador de switch
+
+
+void setup()
+{
+  Serial.begin(9600);                             // Comunicacion serial 9600 bps
+  lcd.begin(16,2);
+  lcd.print("Manejo JoyStick");
+  delay(2000);
+  pinMode(pinLed,OUTPUT);                         //led indicador -> salida. 
+  pinMode(JoyStick_SW, INPUT);                    //switch de joystick -> entrada
+}
+
+void loop()
+{
+  
+  int x = analogRead(JoyStick_X);               //Variable entera x, para almacenar el valor entregado por el sensor de Joystick en el eje x
+  int y = analogRead(JoyStick_Y);
+  int sw = digitalRead(JoyStick_SW);            //variable para almacenar el valor digital del interruptor del joystick
+  
+  if(sw == 1)
+  {
+    digitalWrite(pinLed,HIGH);              //Enciende led indicador de activación en interruptor de Joystick
+  }
+  else{
+    digitalWrite(pinLed,LOW);
+  }
+  
+  Serial.print(x ,DEC);                 //imprime el valor decimal obtenido de la lectura de sensor del joystick en el eje X
+  lcd.setCursor(0,1);                   //seleccion coordenadas (columna, fila) pantalla lcd
+  lcd.print("X:");                      //imprime el caracter x en la coordenada de la linea anterior
+  lcd.setCursor(2,1);                   
+  lcd.print(x);                         //imprime el valor de la variable x
+  Serial.print("\t");
+  Serial.print(y ,DEC);
+  lcd.setCursor(7,1);
+  lcd.print("Y:");
+  lcd.setCursor(9,1);
+  lcd.print(y);
+  Serial.print("\t");
+  Serial.println(sw);
+  lcd.setCursor(13,1);
+  lcd.print("S:");
+  lcd.setCursor(15,1);
+  lcd.print(sw);  
+  delay(100);
+  lcd.clear();                            //limpia la pantalla LCD
+  lcd.setCursor(0,0);
+  lcd.print("coordenadas:");
+}
